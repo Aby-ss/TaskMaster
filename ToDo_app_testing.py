@@ -12,39 +12,24 @@ install(show_locals=True)
 from datetime import datetime
 import numpy as np
 
-def update_panel(panel_text: str, add_text: str = "", remove_text: str = "") -> Panel:
+
+def update_panel_text(panel: Panel, text: str, add_text: bool = True):
     """
-    Updates the text of a Rich panel by adding or removing specified text.
-    
+    Updates the text of a Rich panel by adding or removing some text.
+
     Args:
-        panel_text (str): The current text of the panel.
-        add_text (str, optional): The text to add to the panel. Defaults to "".
-        remove_text (str, optional): The text to remove from the panel. Defaults to "".
-        
+        panel (Panel): The Rich panel to update.
+        text (str): The text to add or remove.
+        add_text (bool, optional): Whether to add or remove the text. Defaults to True.
+
     Returns:
-        Panel: The updated panel with the modified text.
+        Panel: The updated Rich panel.
     """
-    # Remove specified text from panel
-    if remove_text:
-        panel_text = panel_text.replace(remove_text, "")
-
-    # Add specified text to panel
     if add_text:
-        panel_text += add_text
-
-    # Return updated panel
-    return Panel(panel_text)
-
-def update_panel_text(panel: Panel, text: str):
-    """Updates a Rich panel's text and renders it to the console."""
-    panel.text += f"\n{text}"
-    print(panel)
-    
-    # Remove the added text after 5 seconds
-    sleep(5)
-    panel.text = panel.text.replace(f"\n{text}", "")
-    print(panel)
-
-# Example usage
-panel = Panel("Original panel text")
-update_panel_text(panel, "New text added to panel")
+        panel.update(f"{panel.renderable}\n{text}")
+    else:
+        panel_text = panel.renderable.split("\n")
+        if text in panel_text:
+            panel_text.remove(text)
+        panel.update("\n".join(panel_text))
+    return panel
