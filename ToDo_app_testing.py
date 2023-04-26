@@ -13,23 +13,13 @@ from datetime import datetime
 import numpy as np
 
 
-def update_panel_text(panel: Panel, text: str, add_text: bool = True):
-    """
-    Updates the text of a Rich panel by adding or removing some text.
-
-    Args:
-        panel (Panel): The Rich panel to update.
-        text (str): The text to add or remove.
-        add_text (bool, optional): Whether to add or remove the text. Defaults to True.
-
-    Returns:
-        Panel: The updated Rich panel.
-    """
+def modify_panel(panel: Panel, text: str, add_text: bool) -> Panel:
     if add_text:
-        panel.update(f"{panel.renderable}\n{text}")
+        panel.body += text
     else:
-        panel_text = panel.renderable.split("\n")
-        if text in panel_text:
-            panel_text.remove(text)
-        panel.update("\n".join(panel_text))
+        panel.body = panel.body.replace(text, '')
     return panel
+
+my_panel = Panel("Hello, world!")
+my_panel = modify_panel(my_panel, "world", False) # remove "world" from panel
+my_panel = modify_panel(my_panel, "goodbye", True) # add "goodbye" to panel
