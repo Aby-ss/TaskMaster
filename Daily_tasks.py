@@ -11,3 +11,8 @@ install(show_locals=True)
 
 from datetime import datetime
 import numpy as np
+
+def daily_tasks(panelname, daily_task):
+    daily_task_panel = Panel(title = panelname, subititle = "✅", box = box.SQUARE, border_style = "bold white")
+    
+    return daily_task_panel

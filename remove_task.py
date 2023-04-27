@@ -11,3 +11,8 @@ install(show_locals=True)
 
 from datetime import datetime
 import numpy as np
+
+def remove_tasks(panelname, removed_task):
+    remove_task_panel = Panel(title = panelname, subititle = "✅", box = box.SQUARE, border_style = "bold white")
+    
+    return remove_task_panel
